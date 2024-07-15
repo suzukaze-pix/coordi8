@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coordi8</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center text-green-400 mb-8">coordi8</h1>
+    <form action="{{ url_for('add_item') }}" method="post" class="flex justify-center mb-8">
+        <select name="category" required class="bg-gray-800 text-white px-4 py-2 rounded-l-md">
+            <option value="hats">帽子</option>
+            <option value="tops">服</option>
+            <option value="bottoms">ズボン</option>
+            <option value="underwear">パンツ</option>
+            <option value="socks">靴下</option>
+            <option value="shoes">靴</option>
+            <option value="accessories">アクセサリー</option>
+        </select>
+        <input type="text" name="item" placeholder="アイテム名" required class="bg-gray-800 text-white px-4 py-2">
+        <button type="submit" class="bg-green-500 text-black px-4 py-2 rounded-r-md hover:bg-green-600 transition-colors">追加</button>
+    </form>
+    <h2 class="text-2xl font-bold text-center text-green-400 mb-4">登録済み</h2>
+    <ul class="space-y-2">
+        {% for category, items in wardrobe.items() %}
+        <li class="bg-gray-800 p-4 rounded-md">
+            <strong class="text-green-400">{{ category }}</strong>:
+            {% for item in items %}
+            {{ item }}{% if not loop.last %}, {% endif %}
+            {% else %}
+            未登録
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('choose_outfit') }}" class="block w-64 mx-auto mt-8 px-4 py-2 bg-green-500 text-black text-center rounded-md hover:bg-green-600 transition-colors">全て諦め、服を決めてもらう</a>
+</div>
+</body>
+</html>
